@@ -1591,3 +1591,16 @@ h1, h2, h3, h4, h5, h6 {
 .project-timeline li strong { color: var(--text-main); }
 .status-complete { background: rgba(47, 125, 77, .1); color: #27653e; border: 1px solid rgba(47, 125, 77, .32); }
 .featured-project-copy p, .case-study-section p { white-space: pre-line; }
+
+/* Keep the energy-solutions dropdown reachable while the pointer crosses the 18px visual gap. */
+.nav-dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 0;
+  right: 0;
+  height: 18px;
+}
+@media (max-width: 760px) {
+  .nav-dropdown-menu::before { content: none; }
+}
