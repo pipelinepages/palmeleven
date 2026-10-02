@@ -1604,3 +1604,23 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 760px) {
   .nav-dropdown-menu::before { content: none; }
 }
+
+/* Crisp, aligned chevron for the Energy Solutions navigation dropdown. */
+.nav-chevron {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  font-size: 0;
+  line-height: 0;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform .2s ease;
+}
+.nav-dropdown:hover .nav-chevron,
+.nav-dropdown:focus-within .nav-chevron {
+  transform: translateY(1px) rotate(225deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-chevron { transition: none; }
+}
