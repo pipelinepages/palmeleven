@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 130" width="100" height="130">
+  <!-- Elegant palm frond matching brand mark -->
+  <g>
+    <!-- Gold stem -->
+    <path d="M48 125 L52 125 L50 55 Z" fill="#C8A14A"/>
+    <!-- Dark green leaflets - left side -->
+    <path d="M50 55 C35 48 22 35 18 22 C28 32 40 42 50 50 Z" fill="#0E3B2E"/>
+    <path d="M50 60 C30 55 15 42 10 28 C22 40 36 50 50 56 Z" fill="#0E3B2E"/>
+    <path d="M50 70 C28 68 12 55 6 40 C18 52 34 62 50 66 Z" fill="#0E3B2E"/>
+    <path d="M50 82 C30 82 14 72 8 58 C20 68 36 76 50 78 Z" fill="#0E3B2E"/>
+    <path d="M50 95 C32 98 18 90 12 76 C24 86 38 92 50 92 Z" fill="#0E3B2E"/>
+    <!-- Dark green leaflets - right side -->
+    <path d="M50 52 C65 44 78 30 82 16 C72 28 60 40 50 48 Z" fill="#0E3B2E"/>
+    <path d="M50 58 C70 52 85 38 90 24 C78 36 64 48 50 54 Z" fill="#0E3B2E"/>
+    <path d="M50 68 C72 65 88 52 94 36 C82 48 66 60 50 64 Z" fill="#0E3B2E"/>
+    <path d="M50 80 C70 80 86 70 92 55 C80 66 64 74 50 76 Z" fill="#0E3B2E"/>
+    <path d="M50 93 C68 96 82 88 88 74 C76 84 62 90 50 90 Z" fill="#0E3B2E"/>
+  </g>
+</svg>
