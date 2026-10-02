@@ -1,0 +1,119 @@
+media:
+  - name: project_images
+    label: Project images
+    input: images/projects
+    output: /images/projects
+    extensions: [jpg, jpeg, png, webp, avif]
+    categories: [image]
+    rename: safe
+
+content:
+  - name: projects
+    label: Projects
+    type: file
+    path: data/projects.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Project title
+        type: string
+        required: true
+      - name: slug
+        type: string
+        required: true
+        pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        description: URL-friendly unique identifier.
+      - name: location
+        type: string
+      - name: client_type
+        label: Client / customer type
+        type: string
+      - name: project_category
+        label: Project category
+        type: string
+      - name: status
+        type: select
+        options:
+          values: [In development, In progress, Completed, On hold]
+      - name: short_description
+        type: text
+      - name: full_description
+        type: text
+      - name: hero_image
+        type: image
+        options:
+          media: project_images
+      - name: project_gallery
+        label: Project gallery
+        type: image
+        options:
+          media: project_images
+          multiple:
+            max: 20
+          unique: true
+      - name: technologies
+        type: string
+        list: true
+      - name: capacity_fields
+        label: Capacity fields
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}: {value} {unit}"
+        fields:
+          - name: label
+            type: string
+          - name: value
+            type: string
+          - name: unit
+            type: string
+      - name: project_timeline
+        label: Project timeline
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{date} · {phase}"
+        fields:
+          - name: date
+            type: string
+          - name: phase
+            type: string
+          - name: description
+            type: text
+      - name: challenge
+        type: text
+      - name: palm11_solution
+        label: Palm 11 solution
+        type: text
+      - name: system_architecture
+        type: text
+      - name: implementation
+        type: text
+      - name: results
+        type: text
+      - name: related_articles
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - name: title
+            type: string
+          - name: url
+            type: string
+      - name: featured
+        label: Featured project
+        type: boolean
+      - name: seo_title
+        label: SEO title
+        type: string
+      - name: seo_description
+        label: SEO description
+        type: text
+
+
+
