@@ -156,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const root = document.querySelector('.featured-project .container');
     if (!root) return;
     const hero = safeProjectUrl(project.hero_image);
+    const architectureImage = safeProjectUrl(project.system_architecture_image);
     const structuredCapacities = [
       ['Solar PV capacity', project.solar_pv_capacity],
       ['Battery storage capacity', project.battery_storage_capacity],
@@ -173,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <div class="featured-project-grid"><figure class="featured-project-image">${hero ? `<img src="${escapeHtml(hero)}" alt="${escapeHtml(project.title)}" loading="lazy">` : `<div class="project-image-placeholder" role="img" aria-label="Project image not yet added"><span>Project image</span></div>`}<figcaption>${hero ? escapeHtml(project.title) : 'Add a hero image in Pages CMS'}</figcaption></figure><div class="featured-project-copy"><p class="project-lede">${escapeHtml(project.short_description)}</p><p>${escapeHtml(project.full_description)}</p><div class="tech-tags tech-tags-lg" aria-label="Project technologies">${projectTags(project.technologies)}</div><a href="contact.html" class="btn btn-primary">Discuss a Similar Project</a></div></div>
       <div class="case-study" aria-label="${escapeHtml(project.title)} case study">
         <div class="case-study-section"><span class="eyebrow">01 · The brief</span><h3>Challenge</h3><p>${escapeHtml(project.challenge || 'Challenge details will be published after confirmation and approval by Palm 11.')}</p><h3>Palm 11 solution</h3><p>${escapeHtml(project.palm11_solution || 'Solution details will be published after confirmation and approval by Palm 11.')}</p></div>
-        <div class="case-study-section"><span class="eyebrow">02 · The system</span><h3>System architecture</h3><p>${escapeHtml(project.system_architecture || 'System architecture details will be published after confirmation and approval by Palm 11.')}</p><h3>Technology</h3><div class="tech-tags">${projectTags(project.technologies)}</div><h3>Technical specifications &amp; capacity</h3>${capacities ? `<div class="project-stats">${capacities}</div>` : '<p>No capacity figures or technical specifications are published pending confirmation and approval by Palm 11.</p>'}</div>
+        <div class="case-study-section"><span class="eyebrow">02 · The system</span><h3>System architecture</h3>${project.system_architecture ? `<p>${escapeHtml(project.system_architecture)}</p>` : ''}${architectureImage ? `<figure class="system-architecture-diagram"><img src="${escapeHtml(architectureImage)}" alt="Approved system architecture diagram for ${escapeHtml(project.title)}" loading="lazy"><figcaption>System architecture</figcaption></figure>` : '<p class="architecture-pending">Approved system architecture diagram will be added when available.</p>'}<h3>Technology</h3><div class="tech-tags">${projectTags(project.technologies)}</div><h3>Technical specifications &amp; capacity</h3>${capacities ? `<div class="project-stats">${capacities}</div>` : '<p>No capacity figures or technical specifications are published pending confirmation and approval by Palm 11.</p>'}</div>
         <div class="case-study-section"><span class="eyebrow">03 · Delivery</span><h3>Implementation</h3><p>${escapeHtml(project.implementation || 'Implementation details will be published after confirmation and approval by Palm 11.')}</p><h3>Project timeline</h3>${timeline ? `<ul class="project-timeline">${timeline}</ul>` : '<p>Timeline details will be published after confirmation and approval by Palm 11.</p>'}</div>
         <div class="case-study-section"><span class="eyebrow">04 · Outcomes</span><h3>Results</h3><p>${escapeHtml(project.results || 'No project results are published at this stage.')}</p><h3>Project gallery</h3>${gallery ? `<div class="case-study-gallery">${gallery}</div>` : '<p>Project images will be added when approved for publication.</p>'}<h3>Related articles</h3>${articles ? `<ul>${articles}</ul>` : '<p>No related articles have been approved for publication yet.</p>'}</div>
       </div><div class="case-study-contact"><div><span class="eyebrow">Planning an energy project?</span><h3>Talk with Palm 11 about your site.</h3></div><a href="contact.html" class="btn btn-primary">Contact Palm 11</a></div>`;
@@ -204,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
     renderProjectCase(featured);
     renderProjectCards(projects);
   }).catch(error => console.warn('Pages CMS project content:', error.message));});
+
 
 
 
