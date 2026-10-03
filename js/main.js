@@ -156,16 +156,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const root = document.querySelector('.featured-project .container');
     if (!root) return;
     const hero = safeProjectUrl(project.hero_image);
-    const capacities = (project.capacity_fields || []).filter(item => item && (item.label || item.value)).map(item => `<div><strong>${escapeHtml([item.value, item.unit].filter(Boolean).join(' '))}</strong><span>${escapeHtml(item.label)}</span></div>`).join('');
+    const structuredCapacities = [
+      ['Solar PV capacity', project.solar_pv_capacity],
+      ['Battery storage capacity', project.battery_storage_capacity],
+      ['Generator capacity', project.generator_capacity],
+      ['Controlled / load capacity', project.controlled_load_capacity],
+      ['Users / customers served', project.users_customers_served]
+    ].filter(([, item]) => item && item.value).map(([label, item]) => ({ label, value: item.value, unit: item.unit }));
+    const capacities = [...(project.capacity_fields || []).filter(item => item && (item.label || item.value)), ...structuredCapacities].map(item => `<div><strong>${escapeHtml([item.value, item.unit].filter(Boolean).join(' '))}</strong><span>${escapeHtml(item.label)}</span></div>`).join('');
+    const projectMeta = [['Location', project.location], ['Project type', project.project_type || project.project_category], ['Customer type', project.client_type], ['Operating model', project.operating_model]].filter(([, value]) => value).map(([label, value]) => `<span><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</span>`).join('');
     const timeline = (project.project_timeline || []).filter(item => item && (item.phase || item.description)).map(item => `<li><strong>${escapeHtml(item.date)} · ${escapeHtml(item.phase)}</strong><span>${escapeHtml(item.description)}</span></li>`).join('');
     const gallery = (project.project_gallery || []).map(safeProjectUrl).filter(Boolean).map((src, index) => `<img src="${escapeHtml(src)}" alt="${escapeHtml(project.title)} project gallery image ${index + 1}" loading="lazy">`).join('');
     const articles = (project.related_articles || []).filter(item => item && item.title && safeProjectUrl(item.url)).map(item => `<li><a href="${escapeHtml(safeProjectUrl(item.url))}">${escapeHtml(item.title)}</a></li>`).join('');
     root.innerHTML = `
-      <div class="featured-project-head"><span class="eyebrow">${project.featured ? 'Featured project' : 'Project case study'} · ${escapeHtml(project.project_category)}</span><h2>${escapeHtml(project.title)}</h2><div class="featured-project-meta"><span><strong>Location:</strong> ${escapeHtml(project.location)}</span><span><strong>Customer type:</strong> ${escapeHtml(project.client_type)}</span><span><strong>Status:</strong> <em class="status ${projectStatusClass(project.status)}">${escapeHtml(project.status)}</em></span></div></div>
+      <div class="featured-project-head"><span class="eyebrow">${project.featured ? 'Featured project' : 'Project case study'} · ${escapeHtml(project.project_category)}</span><h2>${escapeHtml(project.title)}</h2><div class="featured-project-meta">${projectMeta}<span><strong>Project stage:</strong> <em class="status ${projectStatusClass(project.status)}">${escapeHtml(project.status)}</em></span></div></div>
       <div class="featured-project-grid"><figure class="featured-project-image">${hero ? `<img src="${escapeHtml(hero)}" alt="${escapeHtml(project.title)}" loading="lazy">` : `<div class="project-image-placeholder" role="img" aria-label="Project image not yet added"><span>Project image</span></div>`}<figcaption>${hero ? escapeHtml(project.title) : 'Add a hero image in Pages CMS'}</figcaption></figure><div class="featured-project-copy"><p class="project-lede">${escapeHtml(project.short_description)}</p><p>${escapeHtml(project.full_description)}</p><div class="tech-tags tech-tags-lg" aria-label="Project technologies">${projectTags(project.technologies)}</div><a href="contact.html" class="btn btn-primary">Discuss a Similar Project</a></div></div>
       <div class="case-study" aria-label="${escapeHtml(project.title)} case study">
         <div class="case-study-section"><span class="eyebrow">01 · The brief</span><h3>Challenge</h3><p>${escapeHtml(project.challenge || 'Challenge details will be published after confirmation and approval by Palm 11.')}</p><h3>Palm 11 solution</h3><p>${escapeHtml(project.palm11_solution || 'Solution details will be published after confirmation and approval by Palm 11.')}</p></div>
-        <div class="case-study-section"><span class="eyebrow">02 · The system</span><h3>System architecture</h3><p>${escapeHtml(project.system_architecture || 'System architecture details will be published after confirmation and approval by Palm 11.')}</p><h3>Technology</h3><div class="tech-tags">${projectTags(project.technologies)}</div><h3>Capacity</h3>${capacities ? `<div class="project-stats">${capacities}</div>` : '<p>No capacity figures or technical specifications are published pending confirmation and approval by Palm 11.</p>'}</div>
+        <div class="case-study-section"><span class="eyebrow">02 · The system</span><h3>System architecture</h3><p>${escapeHtml(project.system_architecture || 'System architecture details will be published after confirmation and approval by Palm 11.')}</p><h3>Technology</h3><div class="tech-tags">${projectTags(project.technologies)}</div><h3>Technical specifications &amp; capacity</h3>${capacities ? `<div class="project-stats">${capacities}</div>` : '<p>No capacity figures or technical specifications are published pending confirmation and approval by Palm 11.</p>'}</div>
         <div class="case-study-section"><span class="eyebrow">03 · Delivery</span><h3>Implementation</h3><p>${escapeHtml(project.implementation || 'Implementation details will be published after confirmation and approval by Palm 11.')}</p><h3>Project timeline</h3>${timeline ? `<ul class="project-timeline">${timeline}</ul>` : '<p>Timeline details will be published after confirmation and approval by Palm 11.</p>'}</div>
         <div class="case-study-section"><span class="eyebrow">04 · Outcomes</span><h3>Results</h3><p>${escapeHtml(project.results || 'No project results are published at this stage.')}</p><h3>Project gallery</h3>${gallery ? `<div class="case-study-gallery">${gallery}</div>` : '<p>Project images will be added when approved for publication.</p>'}<h3>Related articles</h3>${articles ? `<ul>${articles}</ul>` : '<p>No related articles have been approved for publication yet.</p>'}</div>
       </div><div class="case-study-contact"><div><span class="eyebrow">Planning an energy project?</span><h3>Talk with Palm 11 about your site.</h3></div><a href="contact.html" class="btn btn-primary">Contact Palm 11</a></div>`;
@@ -196,6 +204,8 @@ document.addEventListener('DOMContentLoaded', function () {
     renderProjectCase(featured);
     renderProjectCards(projects);
   }).catch(error => console.warn('Pages CMS project content:', error.message));});
+
+
 
 
 
