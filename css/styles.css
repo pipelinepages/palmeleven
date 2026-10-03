@@ -1764,3 +1764,8 @@ h1, h2, h3, h4, h5, h6 {
 .project-outcome span { color: var(--text-muted); font-size: 13px; }
 .project-outcome p { margin: 5px 0 0; }
 @media (max-width: 560px) { .project-outcomes { grid-template-columns: 1fr; } }
+
+.project-filters { display: flex; flex-wrap: wrap; gap: 9px; margin: 26px 0 30px; }
+.project-filters[hidden] { display: none; }
+.project-filters .filter-btn { padding: 9px 15px; border: 1px solid var(--border-light, #dfe4df); border-radius: 999px; background: #fff; color: var(--text-main); font: inherit; font-size: 14px; cursor: pointer; transition: color .2s ease, background .2s ease, border-color .2s ease; }
+.project-filters .filter-btn:hover, .project-filters .filter-btn.active { border-color: var(--green, #315c49); background: var(--green, #315c49); color: #fff; }
