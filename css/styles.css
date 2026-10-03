@@ -1757,3 +1757,10 @@ h1, h2, h3, h4, h5, h6 {
 .case-study-gallery .project-gallery-item img { display: block; width: 100%; height: 180px; object-fit: cover; border-radius: 0; }
 .case-study-gallery .project-gallery-item figcaption { display: grid; gap: 3px; padding: 10px 12px; color: var(--text-muted, #68717d); font-size: 13px; }
 .case-study-gallery .project-gallery-item figcaption strong { color: var(--text-main, #26312d); }
+
+.project-outcomes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.project-outcome { display: grid; gap: 5px; padding: 14px; border: 1px solid var(--border-light); border-radius: 10px; background: #fbfcfa; }
+.project-outcome strong { color: var(--text-main); font-size: 20px; }
+.project-outcome span { color: var(--text-muted); font-size: 13px; }
+.project-outcome p { margin: 5px 0 0; }
+@media (max-width: 560px) { .project-outcomes { grid-template-columns: 1fr; } }
