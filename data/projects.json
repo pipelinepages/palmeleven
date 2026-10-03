@@ -1,133 +1,26 @@
 [
   {
-    "title": "Lagos Business Park — 850 kW Rooftop.",
-    "slug": "lagos-business-park-850kw",
-    "location": "Lagos, Nigeria",
-    "client_type": "Multi-tenant commercial complex",
-    "project_category": "Commercial",
-    "status": "Completed",
-    "short_description": "Design, supply and installation of an 850 kW rooftop solar system for a multi-tenant commercial complex, including string inverters and cloud-based monitoring.",
-    "full_description": "Design, supply and installation of an 850 kW rooftop solar system for a multi-tenant commercial complex, including string inverters and cloud-based monitoring.",
-    "technologies": [
-      "Solar PV",
-      "String inverters",
-      "Cloud monitoring"
-    ],
-    "capacity_fields": [
-      {
-        "label": "Solar capacity",
-        "value": "850",
-        "unit": "kW"
-      },
-      {
-        "label": "Estimated annual yield",
-        "value": "1.2",
-        "unit": "GWh"
-      },
-      {
-        "label": "Cost reduction",
-        "value": "40",
-        "unit": "%"
-      }
-    ],
-    "featured": false,
-    "seo_title": "Lagos Business Park Solar Project | Palm 11 Energy",
-    "seo_description": "An 850 kW rooftop solar project for a multi-tenant commercial complex in Lagos, Nigeria."
-  },
-  {
-    "title": "Victoria Island Residence — Hybrid System",
-    "slug": "victoria-island-residence-hybrid",
-    "location": "Lagos, Nigeria",
-    "client_type": "Residential",
-    "project_category": "Residential, Hybrid Energy",
-    "status": "Completed",
-    "short_description": "A hybrid solar and battery system designed to provide backup power and high energy self-sufficiency for a family home.",
-    "full_description": "A 15 kW hybrid solar system with 30 kWh lithium battery storage, designed to provide backup power and high energy self-sufficiency for a family home.",
-    "technologies": [
-      "Solar PV",
-      "Lithium battery storage",
-      "Hybrid inverter"
-    ],
-    "capacity_fields": [
-      {
-        "label": "Solar capacity",
-        "value": "15",
-        "unit": "kW"
-      },
-      {
-        "label": "Battery storage",
-        "value": "30",
-        "unit": "kWh"
-      },
-      {
-        "label": "Self-sufficiency",
-        "value": "85",
-        "unit": "%"
-      }
-    ],
-    "featured": false,
-    "seo_title": "Victoria Island Hybrid Energy Project | Palm 11 Energy",
-    "seo_description": "A 15 kW residential hybrid solar system with 30 kWh of battery storage in Victoria Island, Lagos."
-  },
-  {
-    "title": "Ogun Manufacturing Facility — 1.2 MW",
-    "slug": "ogun-manufacturing-facility-1-2mw",
-    "location": "Ogun State, Nigeria",
-    "client_type": "Manufacturing facility",
-    "project_category": "Industrial, Hybrid Energy",
-    "status": "Completed",
-    "short_description": "A ground-mount and rooftop hybrid system designed to offset daytime manufacturing loads and reduce diesel generator runtime.",
-    "full_description": "A 1.2 MW ground-mount and rooftop hybrid system for a manufacturing plant, designed to offset daytime loads and reduce diesel generator runtime.",
-    "technologies": [
-      "Solar PV",
-      "Hybrid power",
-      "Energy monitoring"
-    ],
-    "capacity_fields": [
-      {
-        "label": "Solar capacity",
-        "value": "1.2",
-        "unit": "MW"
-      },
-      {
-        "label": "Estimated annual yield",
-        "value": "1.8",
-        "unit": "GWh"
-      },
-      {
-        "label": "Diesel displacement",
-        "value": "55",
-        "unit": "%"
-      }
-    ],
-    "featured": false,
-    "seo_title": "Ogun Manufacturing Solar Project | Palm 11 Energy",
-    "seo_description": "A 1.2 MW hybrid solar project designed for a manufacturing facility in Ogun State, Nigeria."
-  },
-  {
     "title": "Debojo Community Energy Project",
     "slug": "debojo-community-energy",
     "location": "Lagos State, Nigeria",
-    "client_type": "Community development",
-    "project_category": "Community, Hybrid Energy",
+    "client_type": "Community project",
+    "project_category": "Community Energy",
     "status": "In development",
-    "short_description": "Community-scale distributed energy infrastructure combining solar PV, battery storage, gas/CNG generation, energy management and distribution.",
-    "full_description": "A community-scale energy development planned to improve access to reliable electricity through an integrated distributed-energy system. The proposed system brings together solar PV, battery storage, gas/CNG generation, energy management and local distribution. Detailed capacity, delivery milestones and measured results will be added as the project progresses.",
-    "technologies": [
-      "Solar PV",
-      "Battery storage",
-      "Gas/CNG generation",
-      "Hybrid power",
-      "Energy management",
-      "Community distribution"
-    ],
-    "challenge": "Plan reliable community-scale electricity infrastructure that can combine multiple energy sources and serve local demand.",
-    "palm11_solution": "Develop an integrated distributed-energy concept combining generation, storage, controls and distribution for the Debojo community.",
-    "system_architecture": "Solar PV and gas/CNG generation are planned to work alongside battery storage, an energy management system and community distribution infrastructure.",
-    "implementation": "In development. Delivery phases and commissioning details will be added as they are confirmed.",
-    "results": "Operational and community impact results will be reported when measured and verified.",
+    "short_description": "The Debojo Community Energy Project is in development. Its current concept includes solar PV, battery storage, gas/CNG generation, energy management and community distribution.",
+    "full_description": "The Debojo Community Energy Project is in development. Its current concept includes solar PV, battery storage, gas/CNG generation, energy management and community distribution. Capacities, technical specifications, financial figures, customer numbers, project timeline and results will be shared only after confirmation and approval by Palm 11.",
+    "hero_image": "",
+    "project_gallery": [],
+    "technologies": ["Solar PV", "Battery storage", "Gas/CNG generation", "Energy management", "Community distribution"],
+    "capacity_fields": [],
+    "challenge": "",
+    "palm11_solution": "",
+    "system_architecture": "",
+    "implementation": "",
+    "results": "",
+    "project_timeline": [],
+    "related_articles": [],
     "featured": true,
     "seo_title": "Debojo Community Energy Project | Palm 11 Energy",
-    "seo_description": "Learn about Palm 11's Debojo community energy development in Lagos State, combining solar, battery storage and hybrid generation."
+    "seo_description": "The Debojo Community Energy Project is in development. Palm 11 will publish further details when they are confirmed and approved."
   }
 ]
