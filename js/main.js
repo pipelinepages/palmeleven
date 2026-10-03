@@ -49,22 +49,23 @@ document.addEventListener('DOMContentLoaded', function () {
     );
   }
 
-  /* Project filters: query rendered CMS cards on every selection. */
-  const filterBtns = document.querySelectorAll('.filter-btn');
+  /* Project filters are generated from CMS categories. */
   const applyProjectFilter = filter => {
-    document.querySelectorAll('.project-card[data-category]').forEach(card => {
-      const cats = (card.dataset.category || '').split(/\s+/);
+    document.querySelectorAll('.projects-grid .project-card[data-category]').forEach(card => {
+      const cats = (card.dataset.category || '').split(/\s+/).filter(Boolean);
       card.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
     });
   };
-  if (filterBtns.length) {
-    filterBtns.forEach(btn => btn.addEventListener('click', () => {
-      filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+  document.querySelectorAll('.project-filters').forEach(container => {
+    container.addEventListener('click', event => {
+      const btn = event.target.closest('.filter-btn');
+      if (!btn || !container.contains(btn)) return;
+      container.querySelectorAll('.filter-btn').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
       applyProjectFilter(btn.dataset.filter);
-    }));
-  }
+    });
+  });
   /* Contact form (front-end demo handler) */
   const form = document.getElementById('contactForm');
   if (form) {
@@ -139,8 +140,17 @@ document.addEventListener('DOMContentLoaded', function () {
   };
   const projectTags = values => (Array.isArray(values) ? values : []).filter(Boolean).map(value => `<span>${escapeHtml(value)}</span>`).join('');
   const projectCategories = project => {
-    const value = String(project.project_category || '').toLowerCase();
-    return ['commercial', 'residential', 'industrial', 'community', 'hybrid'].filter(category => value.includes(category)).join(' ');
+    const values = Array.isArray(project.project_categories) ? project.project_categories : (project.project_category ? [project.project_category] : []);
+    return [...new Set(values.map(value => String(value || '').trim()).filter(Boolean))];
+  };
+  const projectCategoryKey = value => String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const renderProjectFilters = projects => {
+    const container = document.querySelector('.project-filters');
+    if (!container) return;
+    const categories = [...new Map(projects.flatMap(project => projectCategories(project)).map(label => [projectCategoryKey(label), label]).filter(([key]) => key)).entries()];
+    if (!categories.length) { container.hidden = true; return; }
+    container.hidden = false;
+    container.innerHTML = `<button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All projects</button>${categories.map(([key, label]) => `<button class="filter-btn" type="button" data-filter="${escapeHtml(key)}" aria-pressed="false">${escapeHtml(label)}</button>`).join('')}`;
   };
   const updateProjectSeo = project => {
     if (project.seo_title) document.title = project.seo_title;
@@ -165,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ['Users / customers served', project.users_customers_served]
     ].filter(([, item]) => item && item.value).map(([label, item]) => ({ label, value: item.value, unit: item.unit }));
     const capacities = [...(project.capacity_fields || []).filter(item => item && (item.label || item.value)), ...structuredCapacities].map(item => `<div><strong>${escapeHtml([item.value, item.unit].filter(Boolean).join(' '))}</strong><span>${escapeHtml(item.label)}</span></div>`).join('');
-    const projectMeta = [['Location', project.location], ['Project type', project.project_type || project.project_category], ['Customer type', project.client_type], ['Operating model', project.operating_model]].filter(([, value]) => value).map(([label, value]) => `<span><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</span>`).join('');
+    const projectMeta = [['Location', project.location], ['Project type', project.project_type || projectCategories(project).join(' · ')], ['Customer type', project.client_type], ['Operating model', project.operating_model]].filter(([, value]) => value).map(([label, value]) => `<span><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</span>`).join('');
     const timeline = (project.project_timeline || []).filter(item => item && (item.phase || item.description)).map(item => `<li><strong>${escapeHtml(item.date)} · ${escapeHtml(item.phase)}</strong><span>${escapeHtml(item.description)}</span></li>`).join('');
     const gallery = (project.project_gallery || []).map((entry, index) => {
       const item = typeof entry === 'string' ? { image: entry } : (entry || {});
@@ -182,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const verifiedSummary = project.results_verified === true ? String(project.results || '').trim() : '';
     const resultsSection = verifiedSummary || verifiedOutcomes ? `<div class="case-study-section"><span class="eyebrow">04 · Outcomes</span><h3>Verified results</h3>${verifiedSummary ? `<p>${escapeHtml(verifiedSummary)}</p>` : ''}${verifiedOutcomes ? `<div class="project-outcomes">${verifiedOutcomes}</div>` : ''}</div>` : '';
     root.innerHTML = `
-      <div class="featured-project-head"><span class="eyebrow">${project.featured ? 'Featured project' : 'Project case study'} · ${escapeHtml(project.project_category)}</span><h2>${escapeHtml(project.title)}</h2><div class="featured-project-meta">${projectMeta}<span><strong>Project stage:</strong> <em class="status ${projectStatusClass(project.status)}">${escapeHtml(project.status)}</em></span></div></div>
+      <div class="featured-project-head"><span class="eyebrow">${project.featured ? 'Featured project' : 'Project case study'}${projectCategories(project).length ? ` · ${escapeHtml(projectCategories(project).join(' · '))}` : ''}</span><h2>${escapeHtml(project.title)}</h2><div class="featured-project-meta">${projectMeta}<span><strong>Project stage:</strong> <em class="status ${projectStatusClass(project.status)}">${escapeHtml(project.status)}</em></span></div></div>
       <div class="featured-project-grid"><figure class="featured-project-image">${hero ? `<img src="${escapeHtml(hero)}" alt="${escapeHtml(project.title)}" loading="lazy">` : `<div class="project-image-placeholder" role="img" aria-label="Project image not yet added"><span>Project image</span></div>`}<figcaption>${hero ? escapeHtml(project.title) : 'Add a hero image in Pages CMS'}</figcaption></figure><div class="featured-project-copy"><p class="project-lede">${escapeHtml(project.short_description)}</p><p>${escapeHtml(project.full_description)}</p><div class="tech-tags tech-tags-lg" aria-label="Project technologies">${projectTags(project.technologies)}</div><a href="contact.html" class="btn btn-primary">Discuss a Similar Project</a></div></div>
       <div class="case-study" aria-label="${escapeHtml(project.title)} case study">
         <div class="case-study-section"><span class="eyebrow">01 · The brief</span><h3>Challenge</h3><p>${escapeHtml(project.challenge || 'Challenge details will be published after confirmation and approval by Palm 11.')}</p><h3>Palm 11 solution</h3><p>${escapeHtml(project.palm11_solution || 'Solution details will be published after confirmation and approval by Palm 11.')}</p></div>
@@ -194,15 +204,16 @@ document.addEventListener('DOMContentLoaded', function () {
     updateProjectSeo(project);
   };
   const renderProjectCards = projects => {
+    renderProjectFilters(projects);
     const grid = document.querySelector('.projects-grid');
     if (!grid) return;
     grid.innerHTML = projects.map(project => {
       const image = safeProjectUrl(project.hero_image);
+      const caseStudyHref = document.querySelector('.featured-project') ? '#project-case-study' : 'projects.html#debojo';
       const stats = (project.capacity_fields || []).slice(0, 3).map(item => `<div><strong>${escapeHtml([item.value, item.unit].filter(Boolean).join(' '))}</strong><span>${escapeHtml(item.label)}</span></div>`).join('');
-      return `<article class="project-card${project.featured ? ' project-card-featured' : ''}" data-project-slug="${escapeHtml(project.slug)}" data-category="${escapeHtml(projectCategories(project))}" data-status="${escapeHtml(project.status)}" data-featured="${Boolean(project.featured)}"><div class="project-image">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(project.title)}" loading="lazy">` : '<div class="project-image-placeholder" aria-hidden="true"></div>'}<span class="project-badge">${project.featured ? 'Featured · ' : ''}${escapeHtml(project.project_category)}</span></div><div class="project-body"><h3>${escapeHtml(project.title)}</h3><div class="project-meta"><span>${escapeHtml(project.location)}</span><span>${escapeHtml(project.status)}</span></div><p>${escapeHtml(project.short_description)}</p>${stats ? `<div class="project-stats">${stats}</div>` : ''}<div class="tech-tags">${projectTags((project.technologies || []).slice(0, 4))}</div><div class="project-card-footer"><span class="project-status-label">${escapeHtml(project.client_type)}</span><a class="project-link" href="#project-case-study" data-project-select="${escapeHtml(project.slug)}">View case study <span aria-hidden="true">→</span></a></div></div></article>`;
+      return `<article class="project-card${project.featured ? ' project-card-featured' : ''}" data-project-slug="${escapeHtml(project.slug)}" data-category="${escapeHtml(projectCategories(project).map(projectCategoryKey).join(' '))}" data-status="${escapeHtml(project.status)}" data-featured="${Boolean(project.featured)}"><div class="project-image">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(project.title)}" loading="lazy">` : '<div class="project-image-placeholder" aria-hidden="true"></div>'}<span class="project-badge">${project.featured ? 'Featured · ' : ''}${escapeHtml(projectCategories(project).join(' · '))}</span></div><div class="project-body"><h3>${escapeHtml(project.title)}</h3><div class="project-meta"><span>${escapeHtml(project.location)}</span><span>${escapeHtml(project.status)}</span></div><p>${escapeHtml(project.short_description)}</p>${stats ? `<div class="project-stats">${stats}</div>` : ''}<div class="tech-tags">${projectTags((project.technologies || []).slice(0, 4))}</div><div class="project-card-footer"><span class="project-status-label">${escapeHtml(project.client_type)}</span><a class="project-link" href="${caseStudyHref}" data-project-select="${escapeHtml(project.slug)}">View case study <span aria-hidden="true">→</span></a></div></div></article>`;
     }).join('');
-    const activeFilter = document.querySelector('.filter-btn.active');
-    if (activeFilter) applyProjectFilter(activeFilter.dataset.filter);
+    applyProjectFilter(document.querySelector('.filter-btn.active')?.dataset.filter || 'all');
     grid.querySelectorAll('[data-project-select]').forEach(link => link.addEventListener('click', () => {
       const selected = projects.find(project => project.slug === link.dataset.projectSelect);
       renderProjectCase(selected);
@@ -217,6 +228,11 @@ document.addEventListener('DOMContentLoaded', function () {
     renderProjectCase(featured);
     renderProjectCards(projects);
   }).catch(error => console.warn('Pages CMS project content:', error.message));});
+
+
+
+
+
 
 
 
