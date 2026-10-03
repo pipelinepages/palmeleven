@@ -161,7 +161,31 @@ content:
       - name: implementation
         type: text
       - name: results
+        label: Results summary (verified only)
         type: text
+      - name: results_verified
+        label: Results summary verified for publication
+        type: boolean
+      - name: project_outcomes
+        label: Verified project outcomes
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}: {value} {unit}"
+        fields:
+          - name: label
+            label: Outcome / metric
+            type: string
+          - name: value
+            type: string
+          - name: unit
+            type: string
+          - name: description
+            type: text
+          - name: verified_for_publication
+            label: Verified for publication
+            type: boolean
       - name: related_articles
         type: object
         list:
@@ -182,6 +206,7 @@ content:
       - name: seo_description
         label: SEO description
         type: text
+
 
 
 
