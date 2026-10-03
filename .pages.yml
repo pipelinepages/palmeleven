@@ -53,12 +53,27 @@ content:
           media: project_images
       - name: project_gallery
         label: Project gallery
-        type: image
-        options:
-          media: project_images
-          multiple:
-            max: 20
-          unique: true
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{category}: {caption}"
+        fields:
+          - name: image
+            label: Project photo
+            type: image
+            options:
+              media: project_images
+          - name: category
+            label: Photo type
+            type: select
+            options:
+              values: [Site, Existing infrastructure, Construction, Solar installation, Battery installation, Generator installation, Electrical equipment, Engineers, Testing, Commissioning, Completed project, Other]
+          - name: caption
+            type: text
+          - name: alt_text
+            label: Accessibility description
+            type: string
       - name: technologies
         type: string
         list: true
@@ -167,6 +182,7 @@ content:
       - name: seo_description
         label: SEO description
         type: text
+
 
 
 
