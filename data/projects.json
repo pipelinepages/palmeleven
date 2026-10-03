@@ -3,7 +3,6 @@
   "slug": "debojo-community-energy",
   "location": "Lagos State, Nigeria",
   "client_type": "Community project",
-  "project_category": "Community Energy",
   "status": "In development",
   "short_description": "The Debojo Community Energy Project is in development. Its current concept includes solar PV, battery storage, gas/CNG generation, energy management and community distribution.",
   "full_description": "The Debojo Community Energy Project is in development. Its current concept includes solar PV, battery storage, gas/CNG generation, energy management and community distribution. Capacities, technical specifications, financial figures, customer numbers, project timeline and results will be shared only after confirmation and approval by Palm 11.",
@@ -51,5 +50,8 @@
   "operating_model": "",
   "system_architecture_image": "",
   "results_verified": false,
-  "project_outcomes": []
+  "project_outcomes": [],
+  "project_categories": [
+    "Community Energy"
+  ]
 }
