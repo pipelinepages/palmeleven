@@ -204,12 +204,18 @@ document.addEventListener('DOMContentLoaded', function () {
     updateProjectSeo(project);
   };
   const renderProjectCards = projects => {
-    renderProjectFilters(projects);
     const grid = document.querySelector('.projects-grid');
     if (!grid) return;
-    grid.innerHTML = projects.map(project => {
+    const homePreview = Boolean(grid.closest('.project-preview'));
+    const visibleProjects = homePreview ? projects.filter(project => project.featured === true) : projects;
+    renderProjectFilters(projects);
+    if (!visibleProjects.length && homePreview) {
+      grid.innerHTML = '<p class="projects-empty">No projects are currently featured. Please check back as Palm 11’s portfolio grows.</p>';
+      return;
+    }
+    grid.innerHTML = visibleProjects.map(project => {
       const image = safeProjectUrl(project.hero_image);
-      const caseStudyHref = document.querySelector('.featured-project') ? '#project-case-study' : 'projects.html#debojo';
+      const caseStudyHref = homePreview ? `projects.html?project=${encodeURIComponent(project.slug)}#project-case-study` : '#project-case-study';
       const stats = (project.capacity_fields || []).slice(0, 3).map(item => `<div><strong>${escapeHtml([item.value, item.unit].filter(Boolean).join(' '))}</strong><span>${escapeHtml(item.label)}</span></div>`).join('');
       return `<article class="project-card${project.featured ? ' project-card-featured' : ''}" data-project-slug="${escapeHtml(project.slug)}" data-category="${escapeHtml(projectCategories(project).map(projectCategoryKey).join(' '))}" data-status="${escapeHtml(project.status)}" data-featured="${Boolean(project.featured)}"><div class="project-image">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(project.title)}" loading="lazy">` : '<div class="project-image-placeholder" aria-hidden="true"></div>'}<span class="project-badge">${project.featured ? 'Featured · ' : ''}${escapeHtml(projectCategories(project).join(' · '))}</span></div><div class="project-body"><h3>${escapeHtml(project.title)}</h3><div class="project-meta"><span>${escapeHtml(project.location)}</span><span>${escapeHtml(project.status)}</span></div><p>${escapeHtml(project.short_description)}</p>${stats ? `<div class="project-stats">${stats}</div>` : ''}<div class="tech-tags">${projectTags((project.technologies || []).slice(0, 4))}</div><div class="project-card-footer"><span class="project-status-label">${escapeHtml(project.client_type)}</span><a class="project-link" href="${caseStudyHref}" data-project-select="${escapeHtml(project.slug)}">View case study <span aria-hidden="true">→</span></a></div></div></article>`;
     }).join('');
@@ -224,10 +230,15 @@ document.addEventListener('DOMContentLoaded', function () {
     return response.json();
   }).then(projects => {
     if (!Array.isArray(projects)) throw new Error('Project content must be a list.');
-    const featured = projects.find(project => project.featured) || projects[0];
+    const requestedSlug = new URLSearchParams(window.location.search).get('project');
+    const selectedProject = projects.find(project => project.slug === requestedSlug);
+    const featured = selectedProject || projects.find(project => project.featured) || projects[0];
     renderProjectCase(featured);
     renderProjectCards(projects);
+    if (requestedSlug) requestAnimationFrame(() => document.getElementById('project-case-study')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }).catch(error => console.warn('Pages CMS project content:', error.message));});
+
+
 
 
 
