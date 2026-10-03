@@ -1752,3 +1752,8 @@ h1, h2, h3, h4, h5, h6 {
 .system-architecture-diagram img { display: block; width: 100%; max-height: 620px; object-fit: contain; }
 .system-architecture-diagram figcaption { margin-top: 8px; color: var(--text-muted, #68717d); font-size: 13px; }
 .architecture-pending { color: var(--text-muted, #68717d); }
+
+.case-study-gallery .project-gallery-item { margin: 0; overflow: hidden; background: #fff; border: 1px solid var(--border, #e5e7eb); border-radius: 10px; }
+.case-study-gallery .project-gallery-item img { display: block; width: 100%; height: 180px; object-fit: cover; border-radius: 0; }
+.case-study-gallery .project-gallery-item figcaption { display: grid; gap: 3px; padding: 10px 12px; color: var(--text-muted, #68717d); font-size: 13px; }
+.case-study-gallery .project-gallery-item figcaption strong { color: var(--text-main, #26312d); }
