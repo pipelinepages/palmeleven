@@ -32,7 +32,14 @@ content:
       - name: project_category
         label: Project category
         type: string
+      - name: project_type
+        label: Project type
+        type: string
+      - name: operating_model
+        label: Operating model
+        type: text
       - name: status
+        label: Project stage / status
         type: select
         options:
           values: [Concept, In development, Design, Procurement, Construction, Commissioning, Operational, Completed]
@@ -55,6 +62,46 @@ content:
       - name: technologies
         type: string
         list: true
+      - name: solar_pv_capacity
+        label: Solar PV capacity
+        type: object
+        fields:
+          - name: value
+            type: string
+          - name: unit
+            type: string
+      - name: battery_storage_capacity
+        label: Battery storage capacity
+        type: object
+        fields:
+          - name: value
+            type: string
+          - name: unit
+            type: string
+      - name: generator_capacity
+        label: Generator capacity
+        type: object
+        fields:
+          - name: value
+            type: string
+          - name: unit
+            type: string
+      - name: controlled_load_capacity
+        label: Controlled / load capacity
+        type: object
+        fields:
+          - name: value
+            type: string
+          - name: unit
+            type: string
+      - name: users_customers_served
+        label: Number of users / customers served
+        type: object
+        fields:
+          - name: value
+            type: string
+          - name: unit
+            type: string
       - name: capacity_fields
         label: Capacity fields
         type: object
@@ -114,6 +161,8 @@ content:
       - name: seo_description
         label: SEO description
         type: text
+
+
 
 
 
