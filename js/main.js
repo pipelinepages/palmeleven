@@ -133,7 +133,10 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!url || /^\/\//.test(url) || (/^[a-z][a-z0-9+.-]*:/i.test(url) && !/^https?:\/\//i.test(url))) return '';
     return url;
   };
-  const projectStatusClass = status => /complete/i.test(String(status || '')) ? 'status-complete' : 'status-dev';
+  const projectStatusClass = status => {
+    const key = String(status || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return 'status-' + (key || 'concept');
+  };
   const projectTags = values => (Array.isArray(values) ? values : []).filter(Boolean).map(value => `<span>${escapeHtml(value)}</span>`).join('');
   const projectCategories = project => {
     const value = String(project.project_category || '').toLowerCase();
@@ -193,6 +196,8 @@ document.addEventListener('DOMContentLoaded', function () {
     renderProjectCase(featured);
     renderProjectCards(projects);
   }).catch(error => console.warn('Pages CMS project content:', error.message));});
+
+
 
 
 
