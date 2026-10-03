@@ -136,7 +136,13 @@ content:
         label: Palm 11 solution
         type: text
       - name: system_architecture
+        label: System architecture notes
         type: text
+      - name: system_architecture_image
+        label: Approved system architecture diagram
+        type: image
+        options:
+          media: project_images
       - name: implementation
         type: text
       - name: results
@@ -161,6 +167,7 @@ content:
       - name: seo_description
         label: SEO description
         type: text
+
 
 
 
