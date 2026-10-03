@@ -29,9 +29,10 @@ content:
       - name: client_type
         label: Client / customer type
         type: string
-      - name: project_category
-        label: Project category
+      - name: project_categories
+        label: Project categories (select all that apply)
         type: string
+        list: true
       - name: project_type
         label: Project type
         type: string
@@ -206,6 +207,7 @@ content:
       - name: seo_description
         label: SEO description
         type: text
+
 
 
 
