@@ -35,7 +35,7 @@ content:
       - name: status
         type: select
         options:
-          values: [In development, In progress, Completed, On hold]
+          values: [Concept, In development, Design, Procurement, Construction, Commissioning, Operational, Completed]
       - name: short_description
         type: text
       - name: full_description
@@ -114,6 +114,7 @@ content:
       - name: seo_description
         label: SEO description
         type: text
+
 
 
 
