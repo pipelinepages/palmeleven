@@ -1,19 +1,46 @@
 // Palm 11 Energy - Main JS
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* Mobile menu */
+  /* Mobile menu and Energy Solutions accordion */
   const toggle = document.querySelector('.mobile-toggle');
   const menu = document.querySelector('.nav-menu');
+  const closeDropdowns = () => {
+    document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+      dropdown.classList.remove('open');
+      const button = dropdown.querySelector('.nav-dropdown-toggle');
+      if (button) {
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-label', 'Show Energy Solutions links');
+      }
+    });
+  };
   if (toggle && menu) {
     toggle.addEventListener('click', () => {
-      menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', menu.classList.contains('open'));
+      const isOpen = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      if (!isOpen) closeDropdowns();
     });
-    menu.querySelectorAll('a').forEach(link =>
-      link.addEventListener('click', () => menu.classList.remove('open'))
-    );
+    menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      closeDropdowns();
+    }));
   }
-
+  document.querySelectorAll('.nav-dropdown-toggle').forEach(button => {
+    const dropdown = button.closest('.nav-dropdown');
+    button.addEventListener('click', () => {
+      const isOpen = dropdown.classList.toggle('open');
+      button.setAttribute('aria-expanded', isOpen);
+      button.setAttribute('aria-label', isOpen ? 'Hide Energy Solutions links' : 'Show Energy Solutions links');
+    });
+    button.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && dropdown.classList.contains('open')) {
+        dropdown.classList.remove('open');
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-label', 'Show Energy Solutions links');
+      }
+    });
+  });
   /* Sticky header */
   const header = document.querySelector('.site-header');
   if (header) {
@@ -166,6 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
     renderProjectCase(featured);
     renderProjectCards(projects);
   }).catch(error => console.warn('Pages CMS project content:', error.message));});
+
 
 
 
