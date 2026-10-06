@@ -2,8 +2,6 @@
 
 This site copy is wired to the hosted Pages CMS using `.pages.yml` and `data/projects.json`.
 
-## Connect it to the client’s GitHub repository
-
 1. Sign in at [Pages CMS](https://app.pagescms.org/) with the GitHub account that can write to the repository, install/authorize the Pages CMS GitHub App for that repository, and open the repository.
 2. Open **Projects** in Pages CMS. It edits the structured list in `data/projects.json`; uploaded project photos are stored under `images/projects/` and served from `/images/projects/`.
 3. Commit edits from Pages CMS. GitHub Pages will publish the changed site through its existing deployment setup.
