@@ -1,57 +1,8 @@
-{
-  "title": "Debojo Community Energy Project",
-  "slug": "debojo-community-energy",
-  "location": "Lagos State, Nigeria",
-  "client_type": "Community project",
-  "status": "In development",
-  "short_description": "The Debojo Community Energy Project is in development. Its current concept includes solar PV, battery storage, gas/CNG generation, energy management and community distribution.",
-  "full_description": "The Debojo Community Energy Project is in development. Its current concept includes solar PV, battery storage, gas/CNG generation, energy management and community distribution. Capacities, technical specifications, financial figures, customer numbers, project timeline and results will be shared only after confirmation and approval by Palm 11.",
-  "hero_image": "",
-  "project_gallery": [],
-  "technologies": [
-    "Solar PV",
-    "Battery storage",
-    "Gas/CNG generation",
-    "Energy management",
-    "Community distribution"
-  ],
-  "capacity_fields": [],
-  "challenge": "",
-  "palm11_solution": "",
-  "system_architecture": "",
-  "implementation": "",
-  "results": "",
-  "project_timeline": [],
-  "related_articles": [],
-  "featured": true,
-  "seo_title": "Debojo Community Energy Project | Palm 11 Energy",
-  "seo_description": "The Debojo Community Energy Project is in development. Palm 11 will publish further details when they are confirmed and approved.",
-  "solar_pv_capacity": {
-    "value": "",
-    "unit": ""
-  },
-  "battery_storage_capacity": {
-    "value": "",
-    "unit": ""
-  },
-  "generator_capacity": {
-    "value": "",
-    "unit": ""
-  },
-  "controlled_load_capacity": {
-    "value": "",
-    "unit": ""
-  },
-  "users_customers_served": {
-    "value": "",
-    "unit": ""
-  },
-  "project_type": "",
-  "operating_model": "",
-  "system_architecture_image": "",
-  "results_verified": false,
-  "project_outcomes": [],
-  "project_categories": [
-    "Community Energy"
-  ]
-}
+[
+  {
+    "title": "test",
+    "slug": "testing",
+    "results_verified": false,
+    "featured": false
+  }
+]
