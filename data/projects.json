@@ -8,6 +8,7 @@
     "operating_model": "Palm 11 through a power purchase agreement and working with partners will finance, build, own and runs\n the energy system, while the customer buys the electricity Palm 11 produces at an agreed tariff. The customer pays for energy delivered, not for the equipment, so there's little or no upfront cost.",
     "status": "In development",
     "short_description": "Palm 11 develops and integrates distributed energy systems combining solar, battery storage, hybrid generation and smart energy management to deliver reliable power where itis needed. ",
+    "hero_image": "/images/projects/1000838965-1.jpg",
     "solar_pv_capacity": {
       "value": "600",
       "unit": "Kwp"
