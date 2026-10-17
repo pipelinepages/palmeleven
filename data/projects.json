@@ -20,6 +20,10 @@
       "value": "400",
       "unit": "Kw"
     },
+    "controlled_load_capacity": {
+      "value": "100",
+      "unit": "Kw"
+    },
     "users_customers_served": {
       "value": "600"
     },
