@@ -1,4 +1,28 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html><html lang="en"><head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied'
+  });
+  gtag('js', new Date());
+  window.loadPalm11GoogleAnalytics = function () {
+    if (!window.palm11CookieConsent?.analytics || window.palm11GoogleAnalyticsLoading) return;
+    window.palm11GoogleAnalyticsLoading = true;
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-WK1J6JEWTY';
+    script.onload = function () {
+      if (window.palm11CookieConsent?.analytics) gtag('config', 'G-WK1J6JEWTY');
+      else window.palm11GoogleAnalyticsLoading = false;
+    };
+    document.head.appendChild(script);
+  };
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 

@@ -43,6 +43,17 @@ document.addEventListener('DOMContentLoaded', function () {
   };
   const publishConsent = preferences => {
     window.palm11CookieConsent = preferences;
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        analytics_storage: preferences.analytics ? 'granted' : 'denied',
+        ad_storage: preferences.marketing ? 'granted' : 'denied',
+        ad_user_data: preferences.marketing ? 'granted' : 'denied',
+        ad_personalization: preferences.marketing ? 'granted' : 'denied'
+      });
+    }
+    if (preferences.analytics && typeof window.loadPalm11GoogleAnalytics === 'function') {
+      window.loadPalm11GoogleAnalytics();
+    }
     window.dispatchEvent(new CustomEvent('palm11:consentchange', { detail: preferences }));
   };
   const storedConsent = readConsent();
