@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
   consentBanner.innerHTML = `
     <div class="cookie-consent-content">
       <p class="cookie-consent-title">Your privacy choices</p>
-      <p id="cookie-consent-copy">Essential storage remembers your choice. Optional analytics and marketing storage stay off unless you allow them. You can change your choice anytime in Cookie settings.</p>
+      <p id="cookie-consent-copy">Essential browser storage remembers your choice. Optional analytics or marketing cookies, if enabled, will only run when you allow them. You can change your choice anytime in Cookie settings.</p>
       <div class="cookie-consent-options" hidden>
         <label><input type="checkbox" checked disabled> Essential storage <span>Always on</span></label>
         <label><input type="checkbox" data-consent-category="analytics"> Analytics storage</label>
