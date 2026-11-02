@@ -1,5 +1,93 @@
 // Palm 11 Energy - Main JS
 document.addEventListener('DOMContentLoaded', function () {
+  /* Cookie consent preferences. Optional categories are opt-in; integrations can listen for palm11:consentchange. */
+  const consentKey = 'palm11-cookie-consent-v1';
+  const consentBanner = document.createElement('section');
+  consentBanner.className = 'cookie-consent-banner';
+  consentBanner.setAttribute('role', 'dialog');
+  consentBanner.setAttribute('aria-label', 'Cookie preferences');
+  consentBanner.setAttribute('aria-describedby', 'cookie-consent-copy');
+  consentBanner.hidden = true;
+  consentBanner.innerHTML = `
+    <div class="cookie-consent-content">
+      <p class="cookie-consent-title">Your privacy choices</p>
+      <p id="cookie-consent-copy">Essential storage remembers your choice. Optional analytics and marketing storage stay off unless you allow them. You can change your choice anytime in Cookie settings.</p>
+      <div class="cookie-consent-options" hidden>
+        <label><input type="checkbox" checked disabled> Essential storage <span>Always on</span></label>
+        <label><input type="checkbox" data-consent-category="analytics"> Analytics storage</label>
+        <label><input type="checkbox" data-consent-category="marketing"> Marketing storage</label>
+      </div>
+    </div>
+    <div class="cookie-consent-actions">
+      <button type="button" class="cookie-consent-button cookie-consent-accept">Accept all</button>
+      <button type="button" class="cookie-consent-button cookie-consent-reject">Reject optional</button>
+      <button type="button" class="cookie-consent-button cookie-consent-customize">Customize</button>
+      <button type="button" class="cookie-consent-button cookie-consent-save" hidden>Save choices</button>
+    </div>`;
+  document.body.append(consentBanner);
+  const consentSettings = document.createElement('button');
+  consentSettings.type = 'button';
+  consentSettings.className = 'cookie-settings-trigger';
+  consentSettings.textContent = 'Cookie settings';
+  consentSettings.setAttribute('aria-label', 'Open cookie settings');
+  consentSettings.hidden = true;
+  document.body.append(consentSettings);
+
+  const readConsent = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(consentKey) || 'null');
+      return saved && saved.version === 1 ? saved : null;
+    } catch (_) {
+      return null;
+    }
+  };
+  const publishConsent = preferences => {
+    window.palm11CookieConsent = preferences;
+    window.dispatchEvent(new CustomEvent('palm11:consentchange', { detail: preferences }));
+  };
+  const storedConsent = readConsent();
+  if (storedConsent) {
+    publishConsent(storedConsent);
+    consentSettings.hidden = false;
+  } else {
+    consentBanner.hidden = false;
+  }
+  const setConsent = (analytics, marketing) => {
+    const preferences = { version: 1, necessary: true, analytics: Boolean(analytics), marketing: Boolean(marketing), savedAt: new Date().toISOString() };
+    try {
+      localStorage.setItem(consentKey, JSON.stringify(preferences));
+    } catch (_) {
+      /* Keep the banner usable when browser storage is unavailable. */
+    }
+    publishConsent(preferences);
+    consentBanner.hidden = true;
+    consentSettings.hidden = false;
+  };
+  const openConsent = customize => {
+    consentBanner.hidden = false;
+    consentSettings.hidden = true;
+    const options = consentBanner.querySelector('.cookie-consent-options');
+    const customizeButton = consentBanner.querySelector('.cookie-consent-customize');
+    const saveButton = consentBanner.querySelector('.cookie-consent-save');
+    options.hidden = !customize;
+    customizeButton.hidden = customize;
+    saveButton.hidden = !customize;
+    const saved = readConsent();
+    consentBanner.querySelector('[data-consent-category="analytics"]').checked = Boolean(saved?.analytics);
+    consentBanner.querySelector('[data-consent-category="marketing"]').checked = Boolean(saved?.marketing);
+    (customize ? consentBanner.querySelector('[data-consent-category="analytics"]') : consentBanner.querySelector('.cookie-consent-accept')).focus();
+  };
+  consentBanner.querySelector('.cookie-consent-accept').addEventListener('click', () => setConsent(true, true));
+  consentBanner.querySelector('.cookie-consent-reject').addEventListener('click', () => setConsent(false, false));
+  consentBanner.querySelector('.cookie-consent-customize').addEventListener('click', () => openConsent(true));
+  consentBanner.querySelector('.cookie-consent-save').addEventListener('click', () => {
+    setConsent(
+      consentBanner.querySelector('[data-consent-category="analytics"]').checked,
+      consentBanner.querySelector('[data-consent-category="marketing"]').checked
+    );
+  });
+  consentSettings.addEventListener('click', () => openConsent(true));
+
 
   /* Mobile menu and Energy Solutions accordion */
   const toggle = document.querySelector('.mobile-toggle');
