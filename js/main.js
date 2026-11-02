@@ -153,13 +153,31 @@ document.addEventListener('DOMContentLoaded', function () {
     container.innerHTML = `<button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All projects</button>${categories.map(([key, label]) => `<button class="filter-btn" type="button" data-filter="${escapeHtml(key)}" aria-pressed="false">${escapeHtml(label)}</button>`).join('')}`;
   };
   const updateProjectSeo = project => {
-    if (project.seo_title) document.title = project.seo_title;
-    const description = document.querySelector('meta[name="description"]');
-    if (description && project.seo_description) description.content = project.seo_description;
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle && project.seo_title) ogTitle.content = project.seo_title;
-    const ogDescription = document.querySelector('meta[property="og:description"]');
-    if (ogDescription && project.seo_description) ogDescription.content = project.seo_description;
+    const title = String(project.seo_title || project.title || '').trim();
+    const summary = String(project.seo_description || project.short_description || '').trim();
+    const image = safeProjectUrl(project.hero_image);
+    if (title) document.title = title;
+    const setMeta = (selector, value) => {
+      const element = document.querySelector(selector);
+      if (element && value) element.content = value;
+    };
+    setMeta('meta[name="description"]', summary);
+    setMeta('meta[name="keywords"]', [
+      title,
+      project.location,
+      ...(Array.isArray(project.project_categories) ? project.project_categories : []),
+      ...(Array.isArray(project.technologies) ? project.technologies : [])
+    ].filter(Boolean).join(', '));
+    setMeta('meta[property="og:title"]', title);
+    setMeta('meta[property="og:description"]', summary);
+    setMeta('meta[name="twitter:title"]', title);
+    setMeta('meta[name="twitter:description"]', summary);
+    if (image) {
+      const absoluteImage = new URL(image, window.location.href).href;
+      setMeta('meta[property="og:image"]', absoluteImage);
+      setMeta('meta[property="og:image:alt"]', title);
+      setMeta('meta[name="twitter:image"]', absoluteImage);
+    }
   };
   const renderProjectCase = project => {
     if (!project) return;
