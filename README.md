@@ -1,4 +1,4 @@
-# Palm 11 Projects — Pages CMS setup
+# Palm 11 Projects - Pages CMS setup
 
 This site copy is wired to the hosted Pages CMS using `.pages.yml` and `data/projects.json`.
 
